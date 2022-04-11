@@ -31,8 +31,9 @@ TimeDate(x::DateTime, us::Microsecond, ns::Nanosecond=Nanosecond(0)) =
 TimeDate(x::DateTime, us::T, ns::T=0) where {T<:Integer} =
     TimeDate(x, Microsecond(us), Nanosecond(ns))
 
-# Date
+# Date, Time
 TimeDate(x::Date) = TimeDate(Time0, x)
+TimeDate(x::Time) = TimeDate(x, today())
 
 # Periods
 TimeDate(y::T, m::T=1, d::T=1, H::T=0, M::T=0, S::T=0, ms::T=0, us::T=0, ns::T=0) where {T<:Integer} =

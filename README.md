@@ -34,6 +34,7 @@ true
 ### use
 
 - Use TimeDates as you would use DateTimes.
+- Interconvert with DateTime, Date, Time
 
 #### current limitations
 
