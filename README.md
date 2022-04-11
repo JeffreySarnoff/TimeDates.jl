@@ -35,13 +35,12 @@ true
 
 - Use TimeDates as you would use DateTimes.
 
-#### limitations
+#### current limitations
 
-`dateformat` is not supported
-- The standard format is "2022-04-10T02:04:08.016032064"
-  - `string(::TimeDate)` works with the standard format
-  - `TimeDate(::string)` works with the standard format
-
+- `dateformat` is not supported
+    - use `string(::TimeDate)` and `TimeDate(string(::TimeDate))`
+    - The standard format is "2022-04-10T02:04:08.016032064"
+  
 ----
 
 This is a rewrite of [TimesDates](https://github.com/JeffreySarnoff/TimesDates.jl) without the time zone support.
