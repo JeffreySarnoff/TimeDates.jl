@@ -9,8 +9,9 @@ function TimeDate(s::AbstractString)
     datestr, timestr = separate(s)
     date = Date(rstrip(datestr))
     timestr = lstrip(timestr)
-    hms, subsecs, T = timeseparate(timestr)
-    time = Time(hms) + T(parse(Int,subsecs))
+    hms, subsecs = timeseparate(timestr)
+    subseconds = timesubsecs(subsecs)
+    time = Time(hms) + subseconds
     TimeDate(time, date)
 end
 
@@ -34,7 +35,6 @@ function separate(s::AbstractString)
 end
 
 const FillZeros = ("00", "0", "",)
-const SubsecType = (Millisecond, Microsecond, Nanosecond)
 
 function timeseparate(s::AbstractString)
     idxpoint = findfirst(eqpoint, s)
@@ -42,7 +42,24 @@ function timeseparate(s::AbstractString)
     hms, subsecs = split(s, '.')
     n = length(subsecs)
     subsecs = subsecs * FillZeros[3 - mod(n,3)]
-    n = div(length(subsecs), 3)
-    T = SubsecType[n]
-    hms, subsecs, T
+    hms, subsecs
+end
+
+function timesubsecs(s::AbstractString)
+    n = length(s)
+    n == 0 && return Millisecond(0)
+    if n <= 3
+        m = parse(Int, s) * 10^(3 - n)
+        return Millisecond(m)
+    elseif n <= 6
+        m = parse(Int, s[1:3])
+        u = parse(Int, s[4:n]) * 10^(6 - n)
+        return Millisecond(m) + Microsecond(u)
+    else
+        n = min(n, 9)
+        m = parse(Int, s[1:3])
+        u = parse(Int, s[4:6])
+        n = parse(Int, s[7:n]) * 10^(9 - n)
+        return Millisecond(m) + Microsecond(u) + Nanosecond(n)
+    end
 end
