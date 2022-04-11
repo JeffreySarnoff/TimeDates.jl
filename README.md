@@ -1,5 +1,10 @@
 # DatesWithNanoseconds.jl
-### TimeDate is a nanosecond resolved type similar to DateTime.
+
+### Offers TimeDate, a nanosecond resolved type similar to DateTime.
+
+[![docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://jeffreysarnoff.github.io/DatesWithNanoseconds.jl/dev/)
+
+----
 
 * A date-and-time type with nanosecond resolution
 * TimeDate works like DateTime with more precision
