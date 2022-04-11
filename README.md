@@ -1,2 +1,27 @@
 # DatesWithNanoseconds.jl
-Provides TimeDate, a nanosecond resolved DateTime type.
+### TimeDate is a nanosecond resolved type similar to DateTime.
+
+* A date-and-time type with nanosecond resolution
+* TimeDate works like DateTime with more precision
+* Supports many Dates.jl methods
+* Adds ranges with CompoundPeriod steps
+* Adds `periods`, a NamedTuple constructor
+
+## Quick Start
+
+### construction
+```
+using DatesWithNanoseconds
+
+julia> date = Date(2022, 04, 10)
+2022-04-10
+
+time = Time(2, 4, 8, 16, 32, 64)
+02:04:08.016032064
+
+julia> timedate = TimeDate(2022, 04, 10, 2, 4, 8, 16, 32, 64)
+2022-04-10T02:04:08.016032064
+
+julia> timedate == TimeDate(date, time) == TimeDate(time, date)
+true
+```
