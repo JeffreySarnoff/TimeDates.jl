@@ -11,7 +11,7 @@
 
 ### construction
 ```
-using DatesWithNanoseconds
+using Dates, DatesWithNanoseconds
 
 julia> date = Date(2022, 04, 10)
 2022-04-10
