@@ -39,5 +39,5 @@ true
 
 ----
 
-DatesWithNanoseconds.jl is a rewrite of [TimesDates](https://github.com/JeffreySarnoff/TimesDates.jl) without time zones.
+This is a rewrite of [TimesDates](https://github.com/JeffreySarnoff/TimesDates.jl) without the time zone support.
 
