@@ -1,0 +1,6 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DatesWithNanoseconds = "0c321b81-df77-4526-b8dd-78d44e5f6101"
+
+[compat]
+Documenter = "0.27, 0.28, 0.29, 0.30"
