@@ -40,6 +40,8 @@ end
 
 @testset "conversion" begin
     @test DateTime(atimedate) == adatetime
+    @test TimeDate(DateTime(atimedate)) == atimedate - Microsecond(atimedate) - Nanosecond(atimedate)
+
     @test Date(atimedate) == adate
     @test Time(atimedate) == atime
 end

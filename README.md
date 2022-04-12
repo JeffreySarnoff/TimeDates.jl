@@ -38,10 +38,8 @@ true
 
 #### current limitations
 
-- `dateformat` is not supported
-    - use `string(::TimeDate)` and `TimeDate(string(::TimeDate))`
-    - The standard format is "2022-04-10T02:04:08.016032064"
-  
+- please submit an issue
+
 ----
 
 This is a rewrite of [TimesDates](https://github.com/JeffreySarnoff/TimesDates.jl) without the time zone support.
