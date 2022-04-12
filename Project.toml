@@ -1,5 +1,5 @@
-name = "DatesWithNanoseconds"
-uuid = "0c321b81-df77-4526-b8dd-78d44e5f6101"
+name = TimeDates"
+uuid = "500b1cb1-8d94-4aa8-94cf-76fd2bd356e3"
 keywords = ["Julia", "Dates", "time", "date", "nanoseconds", "periods"]
 license = "MIT"
 authors = ["Jeffrey Sarnoff <jeffrey.sarnoff@gmail.com>"]
