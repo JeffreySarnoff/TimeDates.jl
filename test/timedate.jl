@@ -29,8 +29,6 @@ end
         @test TimeDate(adatetime, us) == atimedate - ananosecond
     end
 
-    end
-
     @testset "from Date" begin
         @test TimeDate(adate) == TimeDate(Time(0, 0, 0, 0, 0, 0), adate)
     end
