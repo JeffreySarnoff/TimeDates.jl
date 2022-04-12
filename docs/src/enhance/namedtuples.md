@@ -4,7 +4,7 @@ The function `periods` converts a `TimeDate`, `Time`, `Date`, or `DateTime`
 into a `NamedTuple` where the names are the lowercase periods.
 
 ```
-using DatesWithNanoseconds
+using Dates, TimeDates
 
 julia> date = Date(2022, 04, 10)
 2022-04-10
