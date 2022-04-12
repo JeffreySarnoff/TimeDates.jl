@@ -1,10 +1,12 @@
+const DefaultTimeDateFormat = dateformat"y-m-dTH:M:S.sss"
+
 function TimeDate(xs::NTuple{N,String}) where {N}
     zs = ntuple(a -> 0, max(0, 9 - length(xs)))
     ys = map(s -> isempty(s) ? 0 : parse(Int, s), xs)
     TimeDate(ys..., zs...)
 end
 
-function TimeDate(str::AbstractString, df::DateFormat)
+function TimeDate(str::AbstractString, df::DateFormat=DefaultTimeDateFormat)
     ymdhms, subsec = ymdhms_subsec(str)
     df_ymdhms, s_count = dateformat_ymdhms(df)
     datetime = DateTime(ymdhms, df_ymdhms)
