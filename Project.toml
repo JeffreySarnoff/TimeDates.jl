@@ -1,4 +1,4 @@
-name = TimeDates"
+name = "TimeDates"
 uuid = "500b1cb1-8d94-4aa8-94cf-76fd2bd356e3"
 keywords = ["Julia", "Dates", "time", "date", "nanoseconds", "periods"]
 license = "MIT"
