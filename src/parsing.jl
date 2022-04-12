@@ -63,7 +63,7 @@ converts a string of numbers into Nanosecond resolved subseconds
 - subseconds("12345678949456") == Millisecond(123) + Microsecond(456) + Nanosecond(789)
 - subseconds("12345678949876") == Millisecond(123) + Microsecond(456) + Nanosecond(790)
 """
-function subseconds(s::AbstractString, scount=3)
+function subseconds(s::AbstractString, s_count=3)
     n = length(s)
     (n == 0 || scount == 0) && return Millisecond(0)
     if n <= 3
@@ -79,7 +79,7 @@ function subseconds(s::AbstractString, scount=3)
         n = parse(Int, s[7:n]) * 10^(9 - n)
         return Millisecond(m) + Microsecond(s_count > 1 ? u : 0) + Nanosecond(s_count > 2 ? u : 0)
     else
-        t = subseconds(s[1:9], scount)
+        t = subseconds(s[1:9], s_count)
         u = Nanosecond(round(Int, parse(Float32, "0." * s[10:end])))
         return t + u
     end
