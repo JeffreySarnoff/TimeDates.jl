@@ -1,7 +1,7 @@
 using Dates
 using Dates: value, tons
-using DatesWithNanoseconds
-using DatesWithNanoseconds: NanosecondsPerMillisecond, NanosecondsPerDay, MicrosecondsPerDay
+using TimeDates
+using TimeDates: NanosecondsPerMillisecond, NanosecondsPerDay, MicrosecondsPerDay
 using Test
 
 milliseconds(x::TimeDate) = fld(value(x), NanosecondsPerMillisecond)
