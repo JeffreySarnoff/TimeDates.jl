@@ -1,9 +1,9 @@
 using Documenter
-using DatesWithNanoseconds
+using Dates, TimeDates
 
 makedocs(
-    modules = [DatesWithNanoseconds],
-    sitename = "DatesWithNanoseconds.jl",
+    modules = [TimeDates],
+    sitename = "TimeDates.jl",
     authors = "Jeffrey Sarnoff",
     clean = false,
     strict = !("strict=false" in ARGS),
@@ -27,6 +27,6 @@ makedocs(
 Deploy docs to Github pages.
 =#
 Documenter.deploydocs(
-    repo="github.com/JeffreySarnoff/DatesWithNanoseconds.jl.git",
+    repo="github.com/JeffreySarnoff/TimeDates.jl.git",
     devbranch = "main",
 )
