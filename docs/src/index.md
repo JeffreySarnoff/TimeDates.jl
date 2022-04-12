@@ -4,7 +4,7 @@ Offers TimeDate, a nanosecond resolved type similar to DateTime.
 
 * A date-and-time type with nanosecond resolution
 * TimeDate works like DateTime with more precision
-* Supports many Dates.jl methods
+* Supports Dates.jl methods
 * Adds ranges with CompoundPeriod steps
 * Adds `periods`, a NamedTuple constructor
 
