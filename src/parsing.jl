@@ -65,7 +65,7 @@ converts a string of numbers into Nanosecond resolved subseconds
 """
 function subseconds(s::AbstractString, s_count=3)
     n = length(s)
-    (n == 0 || scount == 0) && return Millisecond(0)
+    (n == 0 || s_count == 0) && return Millisecond(0)
     if n <= 3
         m = parse(Int, s) * 10^(3 - n)
         return Millisecond(m)
