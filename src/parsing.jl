@@ -24,11 +24,11 @@ function ymdhms_subsec(str::AbstractString)
     datetime, subsec
 end
 
-"""
+#=
     dateformat_ymdhms(::DateFormat)
 
 strips any trailing 's's and their preceeding '.' or ',' , counts trailing 's's
-"""
+=#
 function dateformat_ymdhms(df::Dates.DateFormat)
     str = string(df)[12:end-1]
     s_count = trailing_schars(str)
@@ -51,7 +51,7 @@ function trailing_schars(str)
     n - idx + 1
 end
 
-"""
+#=
     subseconds(str, s_count)
 
 converts a string of numbers into Nanosecond resolved subseconds
@@ -63,7 +63,7 @@ converts a string of numbers into Nanosecond resolved subseconds
 - subseconds("123456789") == Millisecond(123) + Microsecond(456) + Nanosecond(789)
 - subseconds("12345678949456") == Millisecond(123) + Microsecond(456) + Nanosecond(789)
 - subseconds("12345678949876") == Millisecond(123) + Microsecond(456) + Nanosecond(790)
-"""
+=#
 function subseconds(s::AbstractString, s_count=3)
     n = length(s)
     (n == 0 || s_count == 0) && return Millisecond(0)
@@ -94,11 +94,11 @@ function index_seconds_subsecs_sep(str::AbstractString)
     mymax(idx1, idx2)
 end
 
-"""
+#=
     dflast(::DateFormat)
 
 Find the last char in a DateFormat and how often it repeats
-"""
+=#
 function dflast(df::Dates.DateFormat)
     last = df.tokens[end]
     param = parameters(last)[1]
