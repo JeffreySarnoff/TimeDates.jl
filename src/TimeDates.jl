@@ -1,4 +1,4 @@
-module DatesWithNanoseconds
+module TimeDates
 
 export TimeDate, periods, timedate2rata, rata2timedate
 
@@ -18,4 +18,4 @@ include("compoundperiod.jl")
 include("ranges.jl")            # with CompoundPeriod steps
 include("namedtuples.jl")       # alternative representation using NamedTuple
 
-end  # DatesWithNanoseconds
+end  # TimeDates
