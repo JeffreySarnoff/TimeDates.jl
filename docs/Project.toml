@@ -1,7 +1,6 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
-TimeDates = "500b1cb1-8d94-4aa8-94cf-76fd2bd356e3"
 
 [compat]
 Documenter = "0.27, 0.28, 0.29, 0.30"
