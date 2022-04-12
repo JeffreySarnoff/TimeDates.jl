@@ -77,11 +77,11 @@ function subseconds(s::AbstractString, s_count=3)
         m = parse(Int, s[1:3])
         u = parse(Int, s[4:6])
         n = parse(Int, s[7:n]) * 10^(9 - n)
-        return Millisecond(m) + Microsecond(s_count > 1 ? u : 0) + Nanosecond(s_count > 2 ? u : 0)
+        return Millisecond(m) + Microsecond(s_count > 1 ? u : 0) + Nanosecond(s_count > 2 ? n : 0)
     else
         t = subseconds(s[1:9], s_count)
-        u = Nanosecond(round(Int, parse(Float32, "0." * s[10:end])))
-        return t + u
+        n = Nanosecond(round(Int, parse(Float32, "0." * s[10:end])))
+        return t + n
     end
 end
 
