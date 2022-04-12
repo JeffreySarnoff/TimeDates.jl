@@ -1,6 +1,8 @@
 ## Ranges with CompoundPeriods 
 
 ```
+julia> using Dates, TimeDates
+
 julia> start = TimeDate(2000);
 julia> stop  = TimeDate(2000) + Microsecond(1)
 julia> step  = Nanosecond(500);
