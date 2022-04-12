@@ -12,6 +12,9 @@
         @test TimeDate(atimedate_str, dateformat"y-m-dTH:M:S.ss") == atimedate - Nanosecond(atimedate)
         @test TimeDate(atimedate_str, dateformat"y-m-dTH:M:S.s") == atimedate - Nanosecond(atimedate) - Microsecond(atimedate)
         @test TimeDate(atimedate_str, dateformat"y-m-dTH:M:S") == atimedate - Nanosecond(atimedate) - Microsecond(atimedate) - Millisecond(atimedate)
+
+        @test TimeDate(atimedate_str[1:end-3], dateformat"y-m-dTH:M:S.sss") == atimedate - Nanosecond(atimedate)
+        @test TimeDate(atimedate_str[1:end-6], dateformat"y-m-dTH:M:S.sss") == atimedate - Nanosecond(atimedate) - Microsecond(atimedate)
     end
 
 end
