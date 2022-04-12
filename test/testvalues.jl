@@ -13,6 +13,7 @@ adate = Date(yr, mo, dy)
 atime = Time(hr, mn, sc, ms, us, ns)
 atime_hms = Time(hr, mn, sc, 0, 0, 0)
 atime_hmsm = Time(hr, mn, sc, ms, 0, 0)
+atimedate_str = "2022-04-09T12:48:35.877012505"
 
 earlier_timedate = TimeDate(yr, mo, dy - 1, hr, mn - 1, sc, ms, us, ns - 1)
 earlier_datetime = DateTime(yr, mo, dy - 1, hr, mn - 1, sc, ms - 1)
