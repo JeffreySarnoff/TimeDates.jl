@@ -1,8 +1,8 @@
-# DatesWithNanoseconds.jl
+# TimeDates.jl
 
-### Offers TimeDate, a nanosecond resolved type similar to DateTime.
+### TimeDate is nanosecond resolved DateTime-like type.
 
-[![docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://jeffreysarnoff.github.io/DatesWithNanoseconds.jl/dev/)
+[![docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://jeffreysarnoff.github.io/TimeDates.jl/dev/)
 
 ----
 
@@ -16,7 +16,7 @@
 
 ### construction
 ```
-using Dates, DatesWithNanoseconds
+using Dates, TimeDates
 
 julia> date = Date(2022, 04, 10)
 2022-04-10
