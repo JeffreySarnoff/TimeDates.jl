@@ -30,6 +30,16 @@ end
     end
 
     @testset "from Date" begin
-        @test TimeDate(adate) == TimeDate(Time(0,0,0,0,0,0), adate)
+        @test TimeDate(adate) == TimeDate(Time(0, 0, 0, 0, 0, 0), adate)
     end
+
+    @testset "from Time" begin
+        @test TimeDate(atime) == TimeDate(atime, today())
+    end
+end
+
+@testset "conversion" begin
+    @test DateTime(atimedate) == adatetime
+    @test Date(atimedate) == adate
+    @test Time(atimedate) == atime
 end
