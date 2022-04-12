@@ -15,8 +15,7 @@ end
 
 function ymdhms_subsec(str::AbstractString)
     idx = index_seconds_subsecs_sep(str)
-    if isnothing(idx)
-        datetime = str
+    if isnothing(idx) datetime = str
         subsec = ""
     else
         datetime = str[1:idx-1]
