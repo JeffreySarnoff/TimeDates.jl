@@ -1,5 +1,4 @@
 using Documenter
-using Dates, TimeDates
 
 makedocs(
     modules = [TimeDates],
