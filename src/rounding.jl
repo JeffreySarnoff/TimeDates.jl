@@ -84,7 +84,7 @@ end
 function Base.round(td::TimeDate, ::Type{Microsecond}, ::RoundingMode{:NearestTiesUp})
     flr = floor(td, Microsecond)
     delta = (Dates.value(td) - Dates.value(flr)) >= 500
-    flr + Millisecond(delta)
+    flr + Microsecond(delta)
 end
 
 for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond)
