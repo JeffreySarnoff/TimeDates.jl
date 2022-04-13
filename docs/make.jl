@@ -17,8 +17,8 @@ makedocs(
     pages = [
         "Home" => "index.md",
         "Quick Start" => Any[
-            "Installation" => "quickstart/install.md",
-            "Construction" => "quickstart/construction.md"
+            "Construction" => "quickstart/construction.md",
+            "Conversion" => "quickstart/convert.md",
         ],
         "Guide" => Any[
             "Arithmetic" => "userguide/arithmetic.md",
