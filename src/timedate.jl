@@ -26,7 +26,7 @@ TimeDate(date::Date, time::Time, us::T, ns::T=0) where {T<:Integer} =
 TimeDate(x::DateTime) = TimeDate(Time(x), Date(x))
 
 TimeDate(x::DateTime, us::Microsecond, ns::Nanosecond=Nanosecond(0)) =
-    TimeDate(Time(x), Date(x), us, ns)
+    TimeDate(Time(x) + us + ns, Date(x))
 
 TimeDate(x::DateTime, us::T, ns::T=0) where {T<:Integer} =
     TimeDate(x, Microsecond(us), Nanosecond(ns))

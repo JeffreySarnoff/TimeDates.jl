@@ -23,4 +23,8 @@ Dates.days(x::Microsecond) = div(value(x), MicrosecondsPerDay)
 Dates.days(x::Nanosecond) = div(value(x), NanosecondsPerDay)
 
 Dates.value(x::TimeDate) =
-    Int128(NanosecondsPerDay) * value(x.date) + value(x.time)
+    Int128(NanosecondsPerDay) * Dates.value(x.date) + Dates.value(x.time)
+
+# define this missing function
+daysinquarter(x::T) where {T<:Union{Date,DateTime,TimeDate}} =
+    (lastdayofquarter(x) - firstdayofquarter(x)).periods[1].value + 1

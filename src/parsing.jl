@@ -94,18 +94,3 @@ function index_seconds_subsecs_sep(str::AbstractString)
     idx2 = findlast(',', str)
     mymax(idx1, idx2)
 end
-
-#=
-    dflast(::DateFormat)
-
-Find the last char in a DateFormat and how often it repeats
-=#
-function dflast(df::Dates.DateFormat)
-    last = df.tokens[end]
-    param = parameters(last)[1]
-    width = param === Char ? 1 : last.width
-    param, width
-end
-
-parameters(x::Type) = x.parameters
-parameters(x::T) where {T} = parameters(T)
