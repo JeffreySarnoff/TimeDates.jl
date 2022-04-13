@@ -6,7 +6,7 @@ Base.trunc(d::DateTime, ::Type{Week}) = firstdayofweek(d)
 Base.trunc(d::DateTime, ::Type{Quarter}) = firstdayofquarter(d)
 
 # using a loop with @eval begin did not work well
-    
+
 Base.trunc(td::TimeDate, ::Type{Year}) = TimeDate(Time0, trunc(td.date, Year))
 Base.trunc(td::TimeDate, ::Type{Quarter}) = TimeDate(Time0, trunc(td.date, Quarter))
 Base.trunc(td::TimeDate, ::Type{Month}) = TimeDate(Time0, trunc(td.date, Month))
@@ -93,6 +93,14 @@ function Base.round(td::TimeDate, ::Type{Year}, ::RoundingMode{:NearestTiesUp})
     delta = (Dates.value(td) - Dates.value(hlf)) >= 0
     flr + Year(delta)
 end
+function Base.round(td::TimeDate, ::Type{Quarter}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Quarter)
+    dys = daysinquarter(td)
+    dys = (dys >> 1) + isodd(dys)
+    hlf = flr + Day(dys)
+    delta = (Dates.value(td) - Dates.value(hlf)) >= 0
+    flr + Quarter(delta)
+end
 function Base.round(td::TimeDate, ::Type{Month}, ::RoundingMode{:NearestTiesUp})
     flr = floor(td, Month)
     dys = daysinmonth(td)
@@ -100,6 +108,14 @@ function Base.round(td::TimeDate, ::Type{Month}, ::RoundingMode{:NearestTiesUp})
     hlf = flr + Day(dys)
     delta = (Dates.value(td) - Dates.value(hlf)) >= 0
     flr + Month(delta)
+end
+function Base.round(td::TimeDate, ::Type{Week}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Week)
+    dys = 7
+    dys = (dys >> 1) + isodd(dys)
+    hlf = flr + Day(dys)
+    delta = (Dates.value(td) - Dates.value(hlf)) >= 0
+    flr + Week(delta)
 end
 function Base.round(td::TimeDate, ::Type{Day}, ::RoundingMode{:NearestTiesUp})
     flr = floor(td, Day)
