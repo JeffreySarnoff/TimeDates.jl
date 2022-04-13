@@ -3,18 +3,15 @@
 
     @test Nanosecond(compound) == Nanosecond(70_000_000_000)
     @test Millisecond(compound) == Millisecond(70_000)
-    @test zero(compound) = Minute(0) + Second(0)
-    @test isempty(zero(compound)) == true
+    @test isempty(Minute(0) + Second(0)) == true
 
     @test signbit(Minute(1)) == false
     @test signbit(Minute(-1)) == true
     @test signbit(compound) == false
     @test signbit(-compound) == true
-    @test signbit(zero(compound)) == true
 
     @test sign(compound) == 1
     @test sign(-compound) == -1
-    @test sign(zero(compound)) == 0
 
     @test Dates.toms(compound) == Millisecond(compound)
     @test Dates.tons(compound) == Nanosecond(compound)
