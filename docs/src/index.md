@@ -1,13 +1,14 @@
 # TimeDates.jl
 
-Offers TimeDate, a nanosecond resolved type similar to DateTime.
+Offers TimeDate, a date-and-time type with nanosecond resolution
 
-* A date-and-time type with nanosecond resolution
 * TimeDate works like DateTime with more precision
 * Supports Dates.jl methods
 * Interconverts with DateTime, Date
+
 * Adds ranges with CompoundPeriod steps
 * Adds `periods`, a NamedTuple constructor
+* introduces round(::Time, ::TimePeriod, ::RoundingMode)
 
 ----
 
