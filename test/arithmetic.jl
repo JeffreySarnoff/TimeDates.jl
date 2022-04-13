@@ -39,4 +39,6 @@
     @test (atimedate - adatetime) == Microsecond(atimedate) + Nanosecond(atimedate)
     @test atime - (atimedate - adate) == Time(0, 0, 0)
     @test atime + (adate - atimedate) == Time(0, 0, 0)
+
+    @test atimedate - later_timedate ==  Day(-1) + Minute(-1) + Nanosecond(-1)
 end
