@@ -16,6 +16,10 @@ Offers TimeDate, a date-and-time type with nanosecond resolution
 
 ----
 
+>  *click on top-right triple-bar for more docs*
+
+----
+
 - installs with  `using Pkg; Pkg.add("TimeDates")`
 
 - ask questions
@@ -26,6 +30,4 @@ Offers TimeDate, a date-and-time type with nanosecond resolution
 - report any issues [here](https://github.com/JeffreySarnoff/TimeDates.jl/issues)
 
 ----
-
-**click on the triple bar at the upper right for the docs menu**
 
