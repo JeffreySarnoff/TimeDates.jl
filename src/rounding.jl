@@ -7,7 +7,9 @@ const HalfPriorPeriod = (
 
 for period in (:Year, :Quarter, :Month, :Week)
     @eval begin
-        Base.trunc(td::TimeDate, p::Type{$period}) = TimeDate(Time0, trunc(td.date, p))
+        if $period != Week
+            Base.trunc(td::TimeDate, p::Type{$period}) = TimeDate(Time0, trunc(td.date, p))
+        end
 
         Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:NearestTiesUp}) = TimeDate(Time0, round(td.date, $period, RoundNearestTiesUp))
         Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:Up}) = TimeDate(Time0, round(td.date, $period, RoundUp))
@@ -15,6 +17,10 @@ for period in (:Year, :Quarter, :Month, :Week)
         Base.round(td::TimeDate, p::Type{$period}) = round(td, p, RoundNearestTiesUp)
     end
 end
+
+Base.trunc(td::TimeDate, p::Type{Week}) = round(td, Week, RoundDown)
+Base.trunc(dt::DateTime, p::Type{Week}) = round(dt, Week, RoundDown)
+Base.trunc(d::Date, p::Type{Week}) = round(d, Week, RoundDown)
 
 # special case rounding to the Day
 
