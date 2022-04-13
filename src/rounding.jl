@@ -1,7 +1,7 @@
 # trunc, floor == trunc, RoundDown == trunc
 
 @inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:DatePeriod} =
-    TimeDate(td.time, trunc(td.date, P))
+    TimeDate(Time0, trunc(td.date, P))
 @inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:TimePeriod} =
     TimeDate(trunc(td.time, P), td.date)
 
