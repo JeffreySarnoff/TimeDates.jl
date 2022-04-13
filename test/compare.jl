@@ -33,7 +33,7 @@
     @test <(TimeDate(adatetime), adatetime) == false
 
     @test <=(adate, atimedate) == true
-    @test <=(TimeDate(adate), adate) == false
+    @test <=(TimeDate(adate), adate) == true
     @test <=(adatetime, atimedate) == true
-    @test <=(TimeDate(adatetime), adatetime) == false
+    @test <=(TimeDate(adatetime), adatetime) == true
 end
