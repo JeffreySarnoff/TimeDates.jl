@@ -116,7 +116,7 @@ Base.round(td::Time, ::Type{Microsecond}, ::RoundingMode{:Up}) =
     trunc(td, Microsecond) + Microsecond(nanosecond(td) > 0)
 Base.round(td::Time, ::Type{Nanosecond}, ::RoundingMode{:Up}) = td
 
-for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond)
+for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
     @eval Base.round(td::TimeDate, ::Type{$T}, ::RoundingMode{:Up}) = ceil(td, $T)
 end
 
