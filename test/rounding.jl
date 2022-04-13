@@ -23,12 +23,12 @@
 
       time0 = Time(0)
       for period in (Year, Quarter, Month, Week)
-            @test Base.trunc(atimedate, period) = TimeDate(time0, trunc(td.date, period))
+            @test Base.trunc(atimedate, period) == TimeDate(time0, trunc(td.date, period))
 
-            @test Base.round(atimedate, period, RoundNearestTiesUp) = TimeDate(time0, round(td.date, period, RoundNearestTiesUp))
-            @test Base.round(atimedate, period, RoundUp) = TimeDate(time0, round(td.date, period, RoundUp))
-            @test Base.round(atimedate, period, RoundDown) = TimeDate(time0, round(td.date, period, RoundDown))
-            @test Base.round(atimedate, period) = round(atimedate, period, RoundNearestTiesUp)
+            @test Base.round(atimedate, period, RoundNearestTiesUp) == TimeDate(time0, round(td.date, period, RoundNearestTiesUp))
+            @test Base.round(atimedate, period, RoundUp) == TimeDate(time0, round(td.date, period, RoundUp))
+            @test Base.round(atimedate, period, RoundDown) == TimeDate(time0, round(td.date, period, RoundDown))
+            @test Base.round(atimedate, period) == round(atimedate, period, RoundNearestTiesUp)
       end
 
 end
