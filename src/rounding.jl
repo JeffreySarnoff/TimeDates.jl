@@ -5,6 +5,27 @@ Base.trunc(d::Date, ::Type{Week}) = firstdayofweek(d)
 Base.trunc(d::DateTime, ::Type{Week}) = firstdayofweek(d)
 Base.trunc(d::DateTime, ::Type{Quarter}) = firstdayofquarter(d)
 
+Base.trunc(t::Time, ::Type{Hour}) = Time(hour(t))
+Base.trunc(t::Time, ::Type{Minute}) = Time(hour(t), minute(t))
+Base.trunc(t::Time, ::Type{Second}) = Time(hour(t), minute(t), second(t))
+Base.trunc(t::Time, ::Type{Millisecond}) = Time(hour(t), minute(t), second(t), millisecond(t))
+Base.trunc(t::Time, ::Type{Microsecond}) = t - Nanosecond(t)
+Base.trunc(t::Time, ::Type{Nanosecond}) = t
+
+Base.floor(t::Time, ::Type{Hour}) = Time(hour(t))
+Base.floor(t::Time, ::Type{Minute}) = Time(hour(t), minute(t))
+Base.floor(t::Time, ::Type{Second}) = Time(hour(t), minute(t), second(t))
+Base.floor(t::Time, ::Type{Millisecond}) = Time(hour(t), minute(t), second(t), millisecond(t))
+Base.floor(t::Time, ::Type{Microsecond}) = t - Nanosecond(t)
+Base.floor(t::Time, ::Type{Nanosecond}) = t
+
+Base.round(t::Time, ::Type{Hour}, ::RoundingMode{:Down}) = Time(hour(t))
+Base.round(t::Time, ::Type{Minute},::RoundingMode{:Down}}) = Time(hour(t), minute(t))
+Base.round(t::Time, ::Type{Second}, ::RoundingMode{:Down}) = Time(hour(t), minute(t), second(t))
+Base.round(t::Time, ::Type{Millisecond}, ::RoundingMode{:Down}) = Time(hour(t), minute(t), second(t), millisecond(t))
+Base.round(t::Time, ::Type{Microsecond}, ::RoundingMode{:Down}) = t - Nanosecond(t)
+Base.round(t::Time, ::Type{Nanosecond}, ::RoundingMode{:Down}) = t
+
 # using a loop with @eval begin did not work well
 
 Base.trunc(td::TimeDate, ::Type{Year}) = TimeDate(Time0, trunc(td.date, Year))
