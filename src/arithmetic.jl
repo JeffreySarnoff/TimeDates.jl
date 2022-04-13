@@ -19,6 +19,10 @@ for (T, PerDay) in ((:Hour, HoursPerDay), (:Minute, MinutesPerDay), (:Second, Se
             date = date + Day(ndays)
             TimeDate(time, date)
         end
+        function Base.:(-)(td::TimeDate, x::$T)
+            y = -x
+            td + y
+        end
     end
 end
 
