@@ -1,5 +1,10 @@
 # trunc, floor == trunc, RoundDown == trunc
 
+Base.trunc(d::Date, ::Type{Quarter}) = firstdayofquarter(d)
+Base.trunc(d::DateTime, ::Type{Quarter}) = firstdayofquarter(d)
+Base.trunc(d::Date, ::Type{Week}) = firstdayofweek(d)
+Base.trunc(d::DateTime, ::Type{Week}) = firstdayofweek(d)
+
 @inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:DatePeriod} =
     TimeDate(Time0, trunc(td.date, P))
 @inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:TimePeriod} =
