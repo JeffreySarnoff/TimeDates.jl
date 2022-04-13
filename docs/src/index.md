@@ -16,7 +16,7 @@ Offers TimeDate, a date-and-time type with nanosecond resolution
 
 ----
 
->  *click on top-right triple-bar for more docs*
+######  *click on top-right triple-bar for more docs*
 
 ----
 
