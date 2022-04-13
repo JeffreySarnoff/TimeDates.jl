@@ -9,4 +9,17 @@ Offers TimeDate, a nanosecond resolved type similar to DateTime.
 * Adds ranges with CompoundPeriod steps
 * Adds `periods`, a NamedTuple constructor
 
-*click on the triple bar at the upper right for more*
+----
+
+- installs with  `using Pkg; Pkg.add("TimeDates")`
+
+- ask questions
+  - on [Discourse](https://discourse.julialang.org/latest)
+  - on [Slack](https://app.slack.com/client/T68168MUP)
+  - on [Zulip](https://julialang.zulipchat.com/#narrow/stream/321834-dates-times-zones) -- using the stream `dates-times-zones`
+  
+- report any issues [here](https://github.com/JeffreySarnoff/TimeDates.jl/issues)
+
+----
+
+**click on the triple bar at the upper right for the docs menu**
