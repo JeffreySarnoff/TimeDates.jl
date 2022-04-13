@@ -3,13 +3,11 @@
 Offers TimeDate, a date-and-time type with nanosecond resolution
 
 * plays well with others
-
     * TimeDate works like DateTime with more precision
     * Supports Dates.jl methods
     * Interconverts with DateTime, Date
 
 * introduces enhancements
-
     * Adds ranges with CompoundPeriod steps
     * Adds `periods`, a NamedTuple constructor
     * introduces round(::Time, ::TimePeriod, ::RoundingMode)
