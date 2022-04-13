@@ -21,8 +21,8 @@ function Base.abs(x::CompoundPeriod)
 end
 
 Base.signbit(x::Period) = signbit(x.value)
-Base.signbit(x::CompoundPeriod) = signbit(x.periods[1].value)
-Base.sign(x::CompoundPeriod) = sign(x.periods[1].value)
+Base.signbit(x::CompoundPeriod) = isempty(x) ? true : signbit(x.periods[1].value)
+Base.sign(x::CompoundPeriod) = isempty(x) ? 0 : sign(x.periods[1].value)
 
 # Dates.tons(::CompoundPeriod) !! May Overflow 
 function tonanos(x::Dates.CompoundPeriod)
