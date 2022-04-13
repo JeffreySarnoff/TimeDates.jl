@@ -3,6 +3,21 @@ const HalfPriorPeriod = (
     Second=Nanosecond(Millisecond(500)), Millisecond=Nanosecond(Microsecond(500)),
     Microsecond=Nanosecond(500), Nanosecond=Nanosecond(0))
 
+# define floor, ceiling for TimePeriods
+Base.floor(tm::Time, ::Type{Hour}) = Time(hour(tm))
+Base.floor(tm::Time, ::Type{Minute}) = Time(hour(tm), minute(tm))
+Base.floor(tm::Time, ::Type{Second}) = Time(hour(tm), minute(tm), second(tm))
+Base.floor(tm::Time, ::Type{Millisecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm))
+Base.floor(tm::Time, ::Type{Microsecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm), microsecond(tm))
+Base.floor(tm::Time, ::Type{Nanosecond}) = tm
+
+Base.ceil(tm::Time, ::Type{Hour}) = Time(hour(tm) + (minute(tm) >= 30))
+Base.ceil(tm::Time, ::Type{Minute}) = Time(hour(tm), minute(tm) + (second(tm) >= 30))
+Base.ceil(tm::Time, ::Type{Second}) = Time(hour(tm), minute(tm), second(tm) + (millisecond(tm) >= 500))
+Base.ceil(tm::Time, ::Type{Millisecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm) + (microsecond(tm) >= 500))
+Base.ceil(tm::Time, ::Type{Microsecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm), microsecond(tm) + (nanosecond(tm) >= 500))
+Base.ceil(tm::Time, ::Type{Nanosecond}) = tm
+
 # general case rounding to the DatePeriod
 
 for period in (:Year, :Quarter, :Month, :Week)
