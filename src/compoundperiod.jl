@@ -25,6 +25,8 @@ Base.signbit(x::CompoundPeriod) = signbit(x.periods[1].value)
 Base.sign(x::CompoundPeriod) = sign(x.periods[1].value)
 
 # Dates.tons(::CompoundPeriod) !! May Overflow 
+Dates.tons(x::Dates.CompoundPeriod) = Int64(tonanos(x))
+
 function tonanos(x::Dates.CompoundPeriod)
     bignanos = Int128.(tons.(x.periods))
     nanos128 = sum(bignanos)
