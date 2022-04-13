@@ -1,10 +1,49 @@
 # trunc, floor == trunc, RoundDown == trunc
 
 Base.trunc(d::Date, ::Type{Quarter}) = firstdayofquarter(d)
-Base.trunc(d::DateTime, ::Type{Quarter}) = firstdayofquarter(d)
 Base.trunc(d::Date, ::Type{Week}) = firstdayofweek(d)
 Base.trunc(d::DateTime, ::Type{Week}) = firstdayofweek(d)
+Base.trunc(d::DateTime, ::Type{Quarter}) = firstdayofquarter(d)
 
+# using a loop with @eval begin did not work well
+    
+Base.trunc(td::TimeDate, ::Type{Year}) = TimeDate(Time0, trunc(td.date, Year))
+Base.trunc(td::TimeDate, ::Type{Quarter}) = TimeDate(Time0, trunc(td.date, Quarter))
+Base.trunc(td::TimeDate, ::Type{Month}) = TimeDate(Time0, trunc(td.date, Month))
+Base.trunc(td::TimeDate, ::Type{Week}) = TimeDate(Time0, trunc(td.date, Week))
+Base.trunc(td::TimeDate, ::Type{Day}) = TimeDate(Time0, trunc(td.date, Day))
+Base.trunc(td::TimeDate, ::Type{Hour}) = TimeDate(trunc(td.time, Hour), td.date)
+Base.trunc(td::TimeDate, ::Type{Minute}) = TimeDate(trunc(td.time, Minute), td.date)
+Base.trunc(td::TimeDate, ::Type{Second}) = TimeDate(trunc(td.time, Second), td.date)
+Base.trunc(td::TimeDate, ::Type{Millisecond}) = TimeDate(trunc(td.time, Millisecond), td.date)
+Base.trunc(td::TimeDate, ::Type{Microsecond}) = TimeDate(trunc(td.time, Microsecond), td.date)
+Base.trunc(td::TimeDate, ::Type{Nanosecond}) = td
+
+Base.floor(td::TimeDate, ::Type{Year}) = TimeDate(Time0, trunc(td.date, Year))
+Base.floor(td::TimeDate, ::Type{Quarter}) = TimeDate(Time0, trunc(td.date, Quarter))
+Base.floor(td::TimeDate, ::Type{Month}) = TimeDate(Time0, trunc(td.date, Month))
+Base.floor(td::TimeDate, ::Type{Week}) = TimeDate(Time0, trunc(td.date, Week))
+Base.floor(td::TimeDate, ::Type{Day}) = TimeDate(Time0, trunc(td.date, Day))
+Base.floor(td::TimeDate, ::Type{Hour}) = TimeDate(trunc(td.time, Hour), td.date)
+Base.floor(td::TimeDate, ::Type{Minute}) = TimeDate(trunc(td.time, Minute), td.date)
+Base.floor(td::TimeDate, ::Type{Second}) = TimeDate(trunc(td.time, Second), td.date)
+Base.floor(td::TimeDate, ::Type{Millisecond}) = TimeDate(trunc(td.time, Millisecond), td.date)
+Base.floor(td::TimeDate, ::Type{Microsecond}) = TimeDate(trunc(td.time, Microsecond), td.date)
+Base.floor(td::TimeDate, ::Type{Nanosecond}) = td
+
+Base.round(td::TimeDate, ::Type{Year}, ::RoundingMode{:Down}) = TimeDate(Time0, trunc(td.date, Year))
+Base.round(td::TimeDate, ::Type{Quarter}, ::RoundingMode{:Down}) = TimeDate(Time0, trunc(td.date, Quarter))
+Base.round(td::TimeDate, ::Type{Month}, ::RoundingMode{:Down}) = TimeDate(Time0, trunc(td.date, Month))
+Base.round(td::TimeDate, ::Type{Week}, ::RoundingMode{:Down}) = TimeDate(Time0, trunc(td.date, Week))
+Base.round(td::TimeDate, ::Type{Day}, ::RoundingMode{:Down}) = TimeDate(Time0, trunc(td.date, Day))
+Base.round(td::TimeDate, ::Type{Hour}, ::RoundingMode{:Down}) = TimeDate(trunc(td.time, Hour), td.date)
+Base.round(td::TimeDate, ::Type{Minute}, ::RoundingMode{:Down}) = TimeDate(trunc(td.time, Minute), td.date)
+Base.round(td::TimeDate, ::Type{Second}, ::RoundingMode{:Down}) = TimeDate(trunc(td.time, Second), td.date)
+Base.round(td::TimeDate, ::Type{Millisecond}, ::RoundingMode{:Down}) = TimeDate(trunc(td.time, Millisecond), td.date)
+Base.round(td::TimeDate, ::Type{Microsecond}, ::RoundingMode{:Down}) = TimeDate(trunc(td.time, Microsecond), td.date)
+Base.round(td::TimeDate, ::Type{Nanosecond}, ::RoundingMode{:Down}) = td
+
+#=
 @inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:DatePeriod} =
     TimeDate(Time0, trunc(td.date, P))
 @inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:TimePeriod} =
@@ -15,6 +54,7 @@ Base.floor(td::TimeDate, ::Type{P}) where {P<:TimePeriod} = trunc(td, P)
 
 Base.round(td::TimeDate, ::Type{P}, ::RoundingMode{:Down}) where {P<:DatePeriod} = trunc(td, P)
 Base.round(td::TimeDate, ::Type{P}, ::RoundingMode{:Down}) where {P<:TimePeriod} = trunc(td, P)
+=#
 
 # ceil, RoundUp == ceil
 
