@@ -13,8 +13,8 @@
     @test sign(compound) == 1
     @test sign(-compound) == -1
 
-    @test Dates.toms(compound) == Millisecond(compound)
-    @test Dates.tons(compound) == Nanosecond(compound)
+    @test Dates.toms(compound) == 70_000
+    @test Dates.tons(compound) == 70_000_000_000 
     @test TimeDates.tonanos(compound) = 70_000_000_000
     @test Dates.value(compound) == TimeDates.tonanos(compound)
 
