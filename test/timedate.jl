@@ -44,4 +44,7 @@ end
 
     @test Date(atimedate) == adate
     @test Time(atimedate) == atime
+
+    @test Base.convert(TimeDate, adate) == TimeDate(adate)
+    @test Base.convert(TimeDate, adatetime) == TimeDate(adatetime)
 end
