@@ -18,9 +18,9 @@
 
         @test TimeDates.ymdhms_subsec(string(adate)) == ("2022-04-09", "")
 
-        @test TimeDates.subseconds("1234567893499", 4) =
+        @test TimeDates.subseconds("1234567893499", 4) ==
             Milliseconds(123) + Microseconds(456) + Nanoseconds(789)
-        @test TimeDates.subseconds("1234567893500", 4) =
+        @test TimeDates.subseconds("1234567893500", 4) ==
             Milliseconds(123) + Microseconds(456) + Nanoseconds(790)
     end
 
