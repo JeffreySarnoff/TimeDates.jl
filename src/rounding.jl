@@ -174,6 +174,33 @@ function Base.round(td::TimeDate, ::Type{Microsecond}, ::RoundingMode{:NearestTi
 end
 Base.round(td::TimeDate, ::Type{Nanosecond}, ::RoundingMode{:NearestTiesUp}) = td
 
+function Base.round(td::Time, ::Type{Hour}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Minute)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 60 * 60 * 500_000_000
+    flr + Hour(delta)
+end
+function Base.round(td::Time, ::Type{Minute}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Minute)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 60 * 500_000_000
+    flr + Minute(delta)
+end
+function Base.round(td::Time, ::Type{Second}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Second)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 500_000_000
+    flr + Second(delta)
+end
+function Base.round(td::Time, ::Type{Millisecond}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Millisecond)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 500_000
+    flr + Millisecond(delta)
+end
+function Base.round(td::Time, ::Type{Microsecond}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Microsecond)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 500
+    flr + Microsecond(delta)
+end
+Base.round(td::Time, ::Type{Nanosecond}, ::RoundingMode{:NearestTiesUp}) = td
+
 for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
     @eval Base.round(td::TimeDate, ::Type{$T}) = round(td, $T, RoundNearestTiesUp)
 end
