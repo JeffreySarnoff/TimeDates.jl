@@ -21,14 +21,15 @@
           milliseconds(timedate1, RoundDown) +
           (microsecond(timedate3) * 1000 + nanosecond(timedate3) >= 500_000)
 
-      time0 = Time(0)
-      for period in (Year, Quarter, Month, Week)
-            @test Base.trunc(atimedate, period) == TimeDate(time0, trunc(td.date, period))
+    time0 = Time(0)
+    for period in (Year, Quarter, Month, Week)
+      @test Base.trunc(atimedate, period) == TimeDate(time0, trunc(atimedate.date, period))
 
-            @test Base.round(atimedate, period, RoundNearestTiesUp) == TimeDate(time0, round(td.date, period, RoundNearestTiesUp))
-            @test Base.round(atimedate, period, RoundUp) == TimeDate(time0, round(td.date, period, RoundUp))
-            @test Base.round(atimedate, period, RoundDown) == TimeDate(time0, round(td.date, period, RoundDown))
-            @test Base.round(atimedate, period) == round(atimedate, period, RoundNearestTiesUp)
-      end
+      @test Base.round(atimedate, period, RoundNearestTiesUp) == TimeDate(time0, round(atimedate.date, period, RoundNearestTiesUp))
+      @test Base.round(atimedate, period, RoundUp) == TimeDate(time0, round(atimedate.date, period, RoundUp))
+      @test Base.round(atimedate, period, RoundDown) == TimeDate(time0, round(atimedate.date, period, RoundDown))
+      @test Base.round(atimedate, period) == round(atimedate, period, RoundNearestTiesUp)
+    end
+
 
 end
