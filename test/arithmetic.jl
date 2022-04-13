@@ -1,5 +1,9 @@
 @testset "arithmetic" begin
-    (atimedate + Day(7)) - atimedate == Day(7)
+    @test (atimedate + Day(7)) - atimedate == Day(7)
+
+    @test atimedate - (atimedate - Day(2) + Nanosecond(5)) ==
+          Day(1) + Hour(23) + Minute(59) + Second(59) + 
+          Millisecond(999) + Microsecond(999) + Nanosecond(995)
 
     p = (Week, Day, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond)
     q = map(x -> x(1), p)
@@ -40,5 +44,5 @@
     @test atime - (atimedate - adate) == Time(0, 0, 0)
     @test atime + (adate - atimedate) == Time(0, 0, 0)
 
-    @test atimedate - later_timedate ==  Day(-1) + Minute(-1) + Nanosecond(-1)
+    @test atimedate - later_timedate == Day(-1) + Minute(-1) + Nanosecond(-1)
 end

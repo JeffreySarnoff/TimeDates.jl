@@ -3,6 +3,8 @@
 ### TimeDate is nanosecond resolved DateTime-like type.
 
 [![docs](https://img.shields.io/badge/docs-dev-blue.svg)](https://jeffreysarnoff.github.io/TimeDates.jl/dev/)
+[![Build Status](https://github.com/JeffreySarnoff/TimeDates.jl/workflows/CI/badge.svg)](https://github.com/JeffreySarnoff/TimeDates.jl/actions/workflows/CI.yml)
+[![coverage](https://codecov.io/gh/JeffreySarnoff/TimeDates.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/JeffreySarnoff/TimeDates.jl)
 
 ----
 

@@ -12,8 +12,8 @@ Base.zero(x::CompoundPeriod) =
 
 Base.isempty(x::CompoundPeriod) = x.periods == Period[]
 
-Base.:(*)(x::CompoundPeriod, y::Integer) =
-    sum(y .* x.periods)
+Base.:(*)(x::Integer, y::CompoundPeriod) = sum(x .* y.periods)
+Base.:(*)(x::CompoundPeriod, y::Integer) = y * x
 
 function Base.abs(x::CompoundPeriod)
     !signbit(x) && return x
