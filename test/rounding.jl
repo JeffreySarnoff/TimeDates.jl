@@ -34,13 +34,13 @@
       @test round(atimedate, period) == round(atimedate, period, RoundNearestTiesUp)
     end
     @test trunc(atimedate, Week) == round(atimedate, Week, RoundDown)
-    
+
     for period in (Minute, Second, Millisecond, Microsecond, Nanosecond)
-          @test trunc(atimedate, period) == TimeDate(time0, trunc(atimedate.date, period))
+          @test trunc(atimedate, period) == TimeDate(trunc(atimedate.time, period), atimedate.date)
     
-          @test round(atimedate, period, RoundNearestTiesUp) == TimeDate(time0, round(atimedate.date, period, RoundNearestTiesUp))
-          @test round(atimedate, period, RoundUp) == TimeDate(time0, round(atimedate.date, period, RoundUp))
-          @test round(atimedate, period, RoundDown) == TimeDate(time0, round(atimedate.date, period, RoundDown))
+          @test round(atimedate, period, RoundNearestTiesUp) == TimeDate(round(atimedate.time, period, RoundNearestTiesUp), atimedate.date)
+          @test round(atimedate, period, RoundUp) == TimeDate(round(atimedate.time, period, RoundUp), atimedate.date)
+          @test round(atimedate, period, RoundDown) == TimeDate(trunc(atimedate.time, period), atimedate.date)
           @test round(atimedate, period) == round(atimedate, period, RoundNearestTiesUp)
     end
 
