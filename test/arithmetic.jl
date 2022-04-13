@@ -2,7 +2,8 @@
     @test (atimedate + Day(7)) - atimedate == Day(7)
 
     @test atimedate - (atimedate - Day(2) + Nanosecond(5)) ==
-          Day(1) + Hour(23) + Minute(59) + Second(59) + Millisecond(999) + Microsecond(995)
+          Day(1) + Hour(23) + Minute(59) + Second(59) + 
+          Millisecond(999) + Microsecond(999) + Nanosecond(995)
 
     p = (Week, Day, Hour, Minute, Second, Millisecond, Microsecond, Nanosecond)
     q = map(x -> x(1), p)
