@@ -1,37 +1,22 @@
-for T in (:Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
+for T in (:Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
     @eval begin
         function Base.:(+)(td::TimeDate, x::$T)
-            totalnanos = Dates.value(td) + Dates.value(x)
-            ndays, nnanos = divrem(totalnanos, NanosecondsPerDay)
-            TimeDate(rata2datetime(ndays)) + Nanosecond(nnanos)
+            totalnanos = Dates.value(td) + Dates.tons(x)
+            ndays, nnanos = Int64.(divrem(totalnanos, NanosecondsPerDay))
+            date = Date(rata2datetime(ndays))
+            time = Time(Nanosecond(nnanos))
+            TimeDate(time, date)
         end
 
         Base.:(+)(x::$T, td::TimeDate) = td + x
         
         function Base.:(-)(td::TimeDate, x::$T)
-            totalnanos = Dates.value(td) - Dates.value(x)
-            ndays, nnanos = divrem(totalnanos, NanosecondsPerDay)
-            TimeDate(rata2datetime(ndays)) + Nanosecond(nnanos)
-        end
-    end
-end
-
-for T in (:Week, :Day)
-    @eval begin
-        function Base.:(+)(td::TimeDate, x::$T)
-            totalnanos = Dates.value(td) + Dates.tons(x)
-            ndays, nnanos = divrem(totalnanos, NanosecondsPerDay)
-            TimeDate(rata2datetime(ndays)) + Nanosecond(nnanos)
-        end
-
-        Base.:(+)(x::$T, td::TimeDate) = td + x
-
-        function Base.:(-)(td::TimeDate, x::$T)
             totalnanos = Dates.value(td) - Dates.tons(x)
-            ndays, nnanos = divrem(totalnanos, NanosecondsPerDay)
-            TimeDate(rata2datetime(ndays)) + Nanosecond(nnanos)
+            ndays, nnanos = Int64.(divrem(totalnanos, NanosecondsPerDay))
+            date = Date(rata2datetime(ndays))
+            time = Time(Nanosecond(nnanos))
+            TimeDate(time, date)
         end
-
     end
 end
 
