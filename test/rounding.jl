@@ -37,6 +37,8 @@
     for period in (Minute, Second, Millisecond, Microsecond, Nanosecond)
           @test trunc(atimedate, period) == TimeDate(trunc(atimedate.time, period), atimedate.date)
     
+          @test floor(atimedate, period) == TimeDate(trunc(atimedate.time, period), atimedate.date)
+
           @test round(atimedate, period, RoundNearestTiesUp) == TimeDate(round(atimedate.time, period, RoundNearestTiesUp), atimedate.date)
           @test round(atimedate, period, RoundUp) == TimeDate(round(atimedate.time, period, RoundUp), atimedate.date)
           @test round(atimedate, period, RoundDown) == TimeDate(trunc(atimedate.time, period), atimedate.date)
@@ -47,5 +49,14 @@
     @test round(atimedate, Day, RoundUp) == TimeDate(time0, atimedate.date + Day(1))
     @test round(atimedate, Day, RoundDown) == TimeDate(time0, atimedate.date)
     @test round(atimedate, Day) == TimeDate(time0, atimedate.date + Day(1))
-    
+   
+    @testset "round time" begin
+        @test floor(atime, Hour) == trunc(atime, Hour)
+        @test floor(atime, Nanosecond) == atime
+        
+      for period in (Hour, Minute, Second, Millisecond, Microsecond, Nanosecond)
+            @test floor(atime, period) == trunc(atime, period)
+            @test round(atime, period, RoundDown) = trunc(atime, period)
+      end
+    end
 end
