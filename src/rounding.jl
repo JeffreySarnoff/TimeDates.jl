@@ -24,9 +24,10 @@ Base.round(td::TimeDate, p::Type{Day}) = round(td, Day, RoundNearestTiesUp)
 
 function Base.round(td::TimeDate, p::Type{Day}, ::RoundingMode{:NearestTiesUp})
     diff = value(td.time)
-    rollover = diff >= Nanosecond(Hour(12))
+    rollover = diff >= value(Nanosecond(Hour(12)))
     TimeDate(Time0, td.date + Day(rollover))
 end
+
 function Base.round(td::TimeDate, p::Type{Day}, ::RoundingMode{:Up})
     date = td.date + Day(!iszero(td.time))
     TimeDate(Time0, date)
