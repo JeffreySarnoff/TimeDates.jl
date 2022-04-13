@@ -16,7 +16,7 @@ for T in (:Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
     end
 end
 
-for F in (:Week, :Day)
+for T in (:Week, :Day)
     @eval begin
         function Base.:(+)(td::TimeDate, x::$T)
             totalnanos = Dates.value(td) + Dates.tons(x)
@@ -35,7 +35,7 @@ for F in (:Week, :Day)
     end
 end
 
-for F in (:Year, :Quarter, Month)
+for T in (:Year, :Quarter, Month)
     @eval begin
         function Base.:(+)(td::TimeDate, x::$T)
             TimeDate(td.time, td.date + x)
