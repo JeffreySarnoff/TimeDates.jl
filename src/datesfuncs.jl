@@ -27,4 +27,4 @@ Dates.value(x::TimeDate) =
 
 # define this missing function
 daysinquarter(x::T) where {T<:Union{Date,DateTime,TimeDate}} =
-    (lastdayofquarter(x) - firstdayofquarter(x)) + Day(1)
+    (lastdayofquarter(x) - firstdayofquarter(x)).periods[1].value + 1
