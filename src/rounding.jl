@@ -1,105 +1,92 @@
-const HalfPriorPeriod = (
-    Hour=Nanosecond(Minute(30)), Minute=Nanosecond(Second(30)),
-    Second=Nanosecond(Millisecond(500)), Millisecond=Nanosecond(Microsecond(500)),
-    Microsecond=Nanosecond(500), Nanosecond=Nanosecond(0))
+# trunc, floor == trunc, RoundDown == trunc
 
-# define floor, ceiling for TimePeriods
-Base.floor(tm::Time, ::Type{Hour}) = Time(hour(tm))
-Base.floor(tm::Time, ::Type{Minute}) = Time(hour(tm), minute(tm))
-Base.floor(tm::Time, ::Type{Second}) = Time(hour(tm), minute(tm), second(tm))
-Base.floor(tm::Time, ::Type{Millisecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm))
-Base.floor(tm::Time, ::Type{Microsecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm), microsecond(tm))
-Base.floor(tm::Time, ::Type{Nanosecond}) = tm
+@inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:DatePeriod} =
+    TimeDate(td.time, trunc(td.date, P))
+@inline Base.trunc(td::TimeDate, ::Type{P}) where {P<:TimePeriod} =
+    TimeDate(trunc(td.time, P), td.date)
 
-Base.ceil(tm::Time, ::Type{Hour}) = Time(hour(tm) + (minute(tm) >= 30))
-Base.ceil(tm::Time, ::Type{Minute}) = Time(hour(tm), minute(tm) + (second(tm) >= 30))
-Base.ceil(tm::Time, ::Type{Second}) = Time(hour(tm), minute(tm), second(tm) + (millisecond(tm) >= 500))
-Base.ceil(tm::Time, ::Type{Millisecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm) + (microsecond(tm) >= 500))
-Base.ceil(tm::Time, ::Type{Microsecond}) = Time(hour(tm), minute(tm), second(tm), millisecond(tm), microsecond(tm) + (nanosecond(tm) >= 500))
-Base.ceil(tm::Time, ::Type{Nanosecond}) = tm
+Base.floor(td::TimeDate, ::Type{P}) where {P<:DatePeriod} = trunc(td, P)
+Base.floor(td::TimeDate, ::Type{P}) where {P<:TimePeriod} = trunc(td, P)
 
-# general case rounding to the DatePeriod
+Base.round(td::TimeDate, ::Type{P}, ::RoundingMode{:Down}) where {P<:DatePeriod} = trunc(td, P)
+Base.round(td::TimeDate, ::Type{P}, ::RoundingMode{:Down}) where {P<:TimePeriod} = trunc(td, P)
 
-for period in (:Year, :Quarter, :Month, :Week)
-    @eval begin
-        if $period != Week
-            Base.trunc(td::TimeDate, p::Type{$period}) = TimeDate(Time0, trunc(td.date, p))
-        end
+# ceil, RoundUp == ceil
 
-        Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:NearestTiesUp}) = TimeDate(Time0, round(td.date, $period, RoundNearestTiesUp))
-        Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:Up}) = TimeDate(Time0, round(td.date, $period, RoundUp))
-        Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:Down}) = TimeDate(Time0, round(td.date, $period, RoundDown))
-        Base.round(td::TimeDate, p::Type{$period}) = round(td, p, RoundNearestTiesUp)
-    end
+Base.ceil(td::TimeDate, ::Type{Year}) =
+    TimeDate(trunc(td, Year)) + Year(((month(td) > 1) + (day(td) > 1) + hour(td) + minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0)
+Base.ceil(td::TimeDate, ::Type{Quarter}) =
+    TimeDate(trunc(td, Quarter)) + Quarter((((month(td) > 1) + (day(td) > 1) + hour(td) + minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Month}) =
+    TimeDate(trunc(td, Month)) + Month((((day(td) > 1) + hour(td) + minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Week}) =
+    TimeDate(trunc(td, Week)) + Week((((day(td) > 1) + hour(td) + minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Day}) =
+    TimeDate(trunc(td, Day)) + Day(((hour(td) + minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Hour}) =
+    TimeDate(trunc(td, Hour)) + Hour(((minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Minute}) =
+    TimeDate(trunc(td, Minute)) + Minute(((second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Second}) =
+    TimeDate(trunc(td, Second)) + Second(((millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Millisecond}) =
+    TimeDate(trunc(td, Millisecond)) + Millisecond(((microsecond(td) + nanosecond(td)) > 0))
+Base.ceil(td::TimeDate, ::Type{Microsecond}) =
+    TimeDate(trunc(td, Microsecond)) + Microsecond(nanosecond(td) > 0)
+
+for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond)
+    @eval Base.round(td::TimeDate, ::Type{$T}, ::RoundingMode{:Up}) = ceil(td, $T)
 end
 
-Base.trunc(td::TimeDate, p::Type{Week}) = round(td, Week, RoundDown)
-Base.trunc(dt::DateTime, p::Type{Week}) = round(dt, Week, RoundDown)
-Base.trunc(d::Date, p::Type{Week}) = round(d, Week, RoundDown)
+# RoundNearestTiesUp, round == RoundNearestTiesUp
 
-# special case rounding to the Day
-
-Base.trunc(td::TimeDate, p::Type{Day}) = TimeDate(Time0, trunc(td.date, Day))
-Base.round(td::TimeDate, p::Type{Day}, ::RoundingMode{:Down}) = trunc(td, Day)
-Base.round(td::TimeDate, p::Type{Day}) = round(td, Day, RoundNearestTiesUp)
-
-function Base.round(td::TimeDate, p::Type{Day}, ::RoundingMode{:NearestTiesUp})
-    diff = value(td.time)
-    rollover = diff >= value(Nanosecond(Hour(12)))
-    TimeDate(Time0, td.date + Day(rollover))
+function Base.round(td::TimeDate, ::Type{Year}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Year)
+    dys = yeardays(td)
+    dys = (dys >> 1) + isodd(dys)
+    hlf = flr + Day(dys)
+    delta = (Dates.value(td) - Dates.value(hlf)) >= 0
+    flr + Year(delta)
+end
+function Base.round(td::TimeDate, ::Type{Month}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Month)
+    dys = monthdays(td)
+    dys = (dys >> 1) + isodd(dys)
+    hlf = flr + Day(dys)
+    delta = (Dates.value(td) - Dates.value(hlf)) >= 0
+    flr + Month(delta)
+end
+function Base.round(td::TimeDate, ::Type{Day}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Day)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 24 * 60 * 60 * 500_000_000
+    flr + Day(delta)
+end
+function Base.round(td::TimeDate, ::Type{Hour}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Minute)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 60 * 60 * 500_000_000
+    flr + Hour(delta)
+end
+function Base.round(td::TimeDate, ::Type{Minute}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Minute)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 60 * 500_000_000
+    flr + Minute(delta)
+end
+function Base.round(td::TimeDate, ::Type{Second}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Second)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 500_000_000
+    flr + Second(delta)
+end
+function Base.round(td::TimeDate, ::Type{Millisecond}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Millisecond)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 500_000
+    flr + Millisecond(delta)
+end
+function Base.round(td::TimeDate, ::Type{Microsecond}, ::RoundingMode{:NearestTiesUp})
+    flr = floor(td, Microsecond)
+    delta = (Dates.value(td) - Dates.value(flr)) >= 500
+    flr + Millisecond(delta)
 end
 
-function Base.round(td::TimeDate, p::Type{Day}, ::RoundingMode{:Up})
-    date = td.date + Day(!iszero(td.time))
-    TimeDate(Time0, date)
-end
-
-# general case rounding to the TimePeriod
-
-for period in (:Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
-    @eval begin
-        Base.trunc(td::TimeDate, p::Type{$period}) = TimeDate(trunc(td.time, p), td.date)
-
-        function Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:Up})
-            t = trunc(td.time, $period)
-            diff = value(td.time - t)
-            t = t + $period(diff != 0)
-            TimeDate(t, td.date)
-        end
-
-        function Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:Down})
-            t = trunc(td.time, $period)
-            TimeDate(t, td.date)
-        end
-
-        function Base.round(td::TimeDate, p::Type{$period}, ::RoundingMode{:NearestTiesUp})
-            t = trunc(td.time, $period)
-            diff = td.time - t
-            rollover = diff >= HalfPriorPeriod[Symbol($period)]
-            TimeDate(t + $period(rollover), td.date)
-        end
-
-        Base.round(td::TimeDate, p::Type{$period}) = round(td, p, RoundNearestTiesUp)
-    end
-end
-
-# special case rounding to the Hour
-
-Base.trunc(td::TimeDate, p::Type{Hour}) = TimeDate(trunc(td.time, Hour), td.date)
-Base.round(td::TimeDate, p::Type{Hour}, ::RoundingMode{:Down}) = trunc(td, Hour)
-Base.round(td::TimeDate, p::Type{Hour}) = round(td, Hour, RoundNearestTiesUp)
-
-function Base.round(td::TimeDate, p::Type{Hour}, ::RoundingMode{:NearestTiesUp})
-    t = trunc(td.time, Hour)
-    diff = td.time - t
-    rollover = diff >= Nanosecond(30 * PerNanosecondsPerMinute)
-    rolloverdate = hour(t) === 23 && rollover
-    TimeDate(t + Hour(rollover), td.date + Day(rolloverdate))
-end
-function Base.round(td::TimeDate, p::Type{Hour}, ::RoundingMode{:Up})
-    t = trunc(td.time, Hour)
-    diff = td.time - t
-    rollover = diff > Nanosecond(0)
-    rolloverdate = hour(t) === 23 && rollover
-    TimeDate(t + Hour(rollover), td.date + Day(rolloverdate))
+for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond)
+    @eval Base.round(td::TimeDate, ::Type{$T}) = round(td, $T, RoundNearestTiesUp)
 end

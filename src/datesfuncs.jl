@@ -23,4 +23,4 @@ Dates.days(x::Microsecond) = div(value(x), MicrosecondsPerDay)
 Dates.days(x::Nanosecond) = div(value(x), NanosecondsPerDay)
 
 Dates.value(x::TimeDate) =
-    Int128(NanosecondsPerDay) * value(x.date) + value(x.time)
+    Int128(NanosecondsPerDay) * Dates.value(x.date) + Dates.value(x.time)
