@@ -26,4 +26,5 @@ Dates.value(x::TimeDate) =
     Int128(NanosecondsPerDay) * Dates.value(x.date) + Dates.value(x.time)
 
 # define this missing function
-daysinquarter(x) = Day(lastdayofquarter(x) - firstdayofquarter(x)) + Day(1)
+daysinquarter(x::T) where {T<:Union{Date,DateTime,TimeDate}} =
+    (lastdayofquarter(x) - firstdayofquarter(x)) + Day(1)
