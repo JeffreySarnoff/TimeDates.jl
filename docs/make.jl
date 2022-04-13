@@ -19,6 +19,7 @@ makedocs(
         "Quick Start" => Any[
             "Construction" => "quickstart/construction.md",
             "Conversion" => "quickstart/convert.md",
+            "Accessing" => "quickstart/accessor.md"
         ],
         "Guide" => Any[
             "Arithmetic" => "userguide/arithmetic.md",
