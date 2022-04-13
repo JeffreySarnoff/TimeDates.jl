@@ -1,32 +1,37 @@
-for (T, PerDay) in ((:Hour, HoursPerDay), (:Minute, MinutesPerDay), (:Second, SecondsPerDay), (:Millisecond, MillisecondsPerDay), (:Microsecond, MicrosecondsPerDay), (:Nanosecond, NanosecondsPerDay))
+for T in (:Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
     @eval begin
         function Base.:(+)(td::TimeDate, x::$T)
-            yearnum = year(td)
-            date = Date(yearnum)
-            ndays = Dates.days(td) - Dates.days(date) + Dates.days(x)
-            nnanos = value(td.time) + Dates.tons(x)
+            totalnanos = Dates.value(td) + Dates.tons(x)
+            ndays, nnanos = Int64.(divrem(totalnanos, NanosecondsPerDay))
+            date = Date(rata2datetime(ndays))
             time = Time(Nanosecond(nnanos))
-            date = date + Day(ndays)
             TimeDate(time, date)
         end
+
         Base.:(+)(x::$T, td::TimeDate) = td + x
+        
         function Base.:(-)(td::TimeDate, x::$T)
-            yearnum = year(td)
-            date = Date(yearnum)
-            ndays = Dates.days(td) - Dates.days(date) - Dates.days(x)
-            nnanos = value(td.time) - Dates.tons(x)
+            totalnanos = Dates.value(td) - Dates.tons(x)
+            ndays, nnanos = Int64.(divrem(totalnanos, NanosecondsPerDay))
+            date = Date(rata2datetime(ndays))
             time = Time(Nanosecond(nnanos))
-            date = date + Day(ndays)
             TimeDate(time, date)
         end
     end
 end
 
-for F in (:Year, :Quarter, :Month, :Week, :Day)
+for T in (:Year, :Quarter, Month)
     @eval begin
-        Base.:(+)(td::TimeDate, x::$F) = TimeDate(td.time, td.date + x)
-        Base.:(+)(x::$F, td::TimeDate) = td + x
-        Base.:(-)(td::TimeDate, x::$F) = TimeDate(td.time, td.date - x)
+        function Base.:(+)(td::TimeDate, x::$T)
+            TimeDate(td.time, td.date + x)
+        end
+
+        Base.:(+)(x::$T, td::TimeDate) = td + x
+
+        function Base.:(-)(td::TimeDate, x::$T)
+            TimeDate(td.time, td.date - x)
+        end
+
     end
 end
 

@@ -16,6 +16,15 @@ makedocs(
     ),
     pages = [
         "Home" => "index.md",
+        "Quick Start" => Any[
+            "Construction" => "quickstart/construction.md",
+            "Conversion" => "quickstart/convert.md",
+            "Accessing" => "quickstart/accessor.md"
+        ],
+        "Guide" => Any[
+            "Arithmetic" => "userguide/arithmetic.md",
+            "Rounding" => "userguide/rounding.md",
+        ],
         "Enhancements" => Any[
             "Compound Ranges" => "enhance/ranges.md",
             "Using NamedTuples" => "enhance/namedtuples.md",
