@@ -78,6 +78,7 @@ Base.ceil(td::TimeDate, ::Type{Millisecond}) =
     TimeDate(trunc(td, Millisecond)) + Millisecond(((microsecond(td) + nanosecond(td)) > 0))
 Base.ceil(td::TimeDate, ::Type{Microsecond}) =
     TimeDate(trunc(td, Microsecond)) + Microsecond(nanosecond(td) > 0)
+Base.ceil(dt::TimeDate, ::Type{Nanosecond}) = td
 
 for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond)
     @eval Base.round(td::TimeDate, ::Type{$T}, ::RoundingMode{:Up}) = ceil(td, $T)
@@ -147,7 +148,8 @@ function Base.round(td::TimeDate, ::Type{Microsecond}, ::RoundingMode{:NearestTi
     delta = (Dates.value(td) - Dates.value(flr)) >= 500
     flr + Microsecond(delta)
 end
+Base.round(td::TimeDate, ::Type{Nanosecond}, ::RoundingMode{:NearestTiesUp}) = td
 
-for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond)
+for T in (:Year, :Quarter, :Month, :Week, :Day, :Hour, :Minute, :Second, :Millisecond, :Microsecond, :Nanosecond)
     @eval Base.round(td::TimeDate, ::Type{$T}) = round(td, $T, RoundNearestTiesUp)
 end

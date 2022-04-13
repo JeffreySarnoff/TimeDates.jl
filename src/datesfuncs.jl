@@ -24,3 +24,6 @@ Dates.days(x::Nanosecond) = div(value(x), NanosecondsPerDay)
 
 Dates.value(x::TimeDate) =
     Int128(NanosecondsPerDay) * Dates.value(x.date) + Dates.value(x.time)
+
+# define this missing function
+daysinquarter(x) = Day(lastdayofquarter(x) - firstdayofquarter(x)) + Day(1)
