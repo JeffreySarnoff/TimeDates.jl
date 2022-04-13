@@ -42,7 +42,7 @@ end
 
 function Base.round(td::TimeDate, ::Type{Year}, ::RoundingMode{:NearestTiesUp})
     flr = floor(td, Year)
-    dys = yeardays(td)
+    dys = daysinyear(td)
     dys = (dys >> 1) + isodd(dys)
     hlf = flr + Day(dys)
     delta = (Dates.value(td) - Dates.value(hlf)) >= 0
@@ -50,7 +50,7 @@ function Base.round(td::TimeDate, ::Type{Year}, ::RoundingMode{:NearestTiesUp})
 end
 function Base.round(td::TimeDate, ::Type{Month}, ::RoundingMode{:NearestTiesUp})
     flr = floor(td, Month)
-    dys = monthdays(td)
+    dys = daysinmonth(td)
     dys = (dys >> 1) + isodd(dys)
     hlf = flr + Day(dys)
     delta = (Dates.value(td) - Dates.value(hlf)) >= 0
