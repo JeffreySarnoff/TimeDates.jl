@@ -23,7 +23,6 @@
 
     time0 = Time(0)
     
-    
     for period in (Year, Quarter, Month, Week)
       if period != Week
             @test trunc(atimedate, period) == TimeDate(time0, trunc(atimedate.date, period))
