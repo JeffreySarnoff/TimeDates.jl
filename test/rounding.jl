@@ -51,12 +51,12 @@
     @test round(atimedate, Day) == TimeDate(time0, atimedate.date + Day(1))
    
     @testset "round time" begin
-        @test floor(atime, Hour) == trunc(atime, Hour)
-        @test floor(atime, Nanosecond) == atime
+      @test floor(atime, Hour) == trunc(atime, Hour)
+      @test floor(atime, Nanosecond) == atime
         
       for period in (Hour, Minute, Second, Millisecond, Microsecond, Nanosecond)
             @test floor(atime, period) == trunc(atime, period)
-            @test round(atime, period, RoundDown) = trunc(atime, period)
+            @test round(atime, period, RoundDown) == trunc(atime, period)
       end
     end
 end
