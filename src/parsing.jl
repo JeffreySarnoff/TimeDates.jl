@@ -82,7 +82,7 @@ function subseconds(s::AbstractString, s_count=3)
         return Millisecond(m) + Microsecond(s_count > 1 ? u : 0) + Nanosecond(s_count > 2 ? n : 0)
     else
         t = subseconds(s[1:9],3)
-        n = Nanosecond(parse(Float32, "0." * s[10:end]) >= 0.5)
+        n = Nanosecond(Dates.value(subseconds(s[10:end], 1)) >= 500)
         return t + n
     end
 end
