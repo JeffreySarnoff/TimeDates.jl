@@ -95,7 +95,7 @@ Base.ceil(td::TimeDate, ::Type{Nanosecond}) = td
 Base.ceil(td::Time, ::Type{Hour}) =
     trunc(td, Hour) + Hour(((minute(td) + second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
 Base.ceil(td::Time, ::Type{Minute}) =
-    trunc(td, Minute)) + Minute(((second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
+    trunc(td, Minute) + Minute(((second(td) + millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
 Base.ceil(td::Time, ::Type{Second}) =
     trunc(td, Second) + Second(((millisecond(td) + microsecond(td) + nanosecond(td)) > 0))
 Base.ceil(td::Time, ::Type{Millisecond}) =
