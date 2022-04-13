@@ -17,6 +17,11 @@
         @test TimeDate(atimedate_str[1:end-6], dateformat"y-m-dTH:M:S.sss") == atimedate - Nanosecond(atimedate) - Microsecond(atimedate)
 
         @test TimeDates.ymdhms_subsec(string(adate)) == ("2022-04-09", "")
+
+        @test TimeDates.subseconds("1234567893" * "499", 4) =
+            Milliseconds(123) + Microseconds(456) + Nanoseconds(789)
+        @test TimeDates.subseconds("1234567893" * "500", 4) =
+            Milliseconds(123) + Microseconds(456) + Nanoseconds(790)
     end
 
     @test TimeDate(("2022", "04", "09")) == TimeDate(adate)

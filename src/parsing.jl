@@ -81,8 +81,8 @@ function subseconds(s::AbstractString, s_count=3)
         n = parse(Int, s[7:n]) * 10^(9 - n)
         return Millisecond(m) + Microsecond(s_count > 1 ? u : 0) + Nanosecond(s_count > 2 ? n : 0)
     else
-        t = subseconds(s[1:9], s_count)
-        n = Nanosecond(round(Int, parse(Float32, "0." * s[10:end])))
+        t = subseconds(s[1:9],3)
+        n = Nanosecond(parse(Float32, "0." * s[10:end]) >= 0.5)
         return t + n
     end
 end
